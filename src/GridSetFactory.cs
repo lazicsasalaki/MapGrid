@@ -4,9 +4,9 @@ namespace TileGrid
 {
     internal static  class GridSetFactory
     {
-        GridSet CreateGridSet(SRS srs,YAxisSchema schema,int minZoom,int maxZoom,double dpi,int tileWidthPixel,int tielHeightPixel)
+        internal static GridSet CreateGridSet(SRS srs,YAxisSchema schema,int minZoom,int maxZoom,double dpi,int tileWidthPixel,int tielHeightPixel)
         {
-            if(schema != YAxisSchema.Tms || schema != YAxisSchema.Xyz)
+            if(schema != YAxisSchema.Tms && schema != YAxisSchema.Xyz)
             {
                 throw new NotSupportedException();
             }
@@ -42,48 +42,53 @@ namespace TileGrid
             var exBBox = new double[]{srs.BBox[0],srs.BBox[1],srs.BBox[2],srs.BBox[3]};
             //bbox minx miny maxx maxy
             exBBox[0] = exBBox[0] + exWidth;
-            if(schema == YAxisSchema.Tms)//y from down to top
+            if (schema == YAxisSchema.Tms)//y from down to top
             {
                 exBBox[3] = exBBox[1] + exHeight;
-            }else if(schema == YAxisSchema.Xyz){//y from top to down
+            }
+            else if (schema == YAxisSchema.Xyz)
+            {//y from top to down
                 exBBox[3] = exBBox[3] - exHeight;
             }
 
-
             var levelNumber = maxZoom - minZoom + 1;
-            var resArr = new double[levelNumber];
-            resArr[0] = res;
-            for (int i = 1; i < levelNumber; i++) 
-            {
-                resArr[i] = res[i - 1] / 2.0;
-            }
-
+            
             var gs = new GridSet();
-
             gs.EPSG = srs.EPSG;
+            gs.DPI = dpi;
             gs.TileHeightPixel = tielHeightPixel;
             gs.TileWidthPixel = tileWidthPixel;
-            gs.DPI = pixelSize;
             gs.YAxisSchema = schema;
             gs.MinZoom = minZoom;
             gs.MaxZoom = maxZoom;
-
+            gs.GridLevels = new Grid[gs.LevelCount];
+            
             for (int i = 0; i < levelNumber; i++)
             {
+                var zoomLevel = minZoom + i;
                 var grid = new Grid();
-                grid.Resolution = resArr[i];
-                grid.ScaleDenom = (resArr[i] * srs.MetersPerUnit) / (0.0254/dpi);
+                grid.ZoomLevel = zoomLevel;
 
-                grid.Resolution * tileWidthPixel
+                var resolution = res / Math.Pow(2,zoomLevel);
+                var scaleDenom = (resolution * srs.MetersPerUnit) / (0.0254/dpi);
+                grid.Resolution = resolution;
+                grid.ScaleDenom = scaleDenom;
+
+                grid.NumTilesWidth = (int)(tileNumberWide * Math.Pow(2,zoomLevel));
+                grid.NumTilesHeight = (int)(tileNumberHigh * Math.Pow(2,zoomLevel));
+                gs.GridLevels[i] = grid;
             }
 
-            
+            // 0    res / 2^0 == res / 1
+            // 1    res / 2^1 == res / 2.0
+            // 2    res / 2^2 == res / 4.0
 
+            //at zoom 0 ,m * n ==  tileNumberWide,tileNumberHigh;
+            //at zoom 1 , m * n == tileNumberWide * 2,tileNumberHigh * 2
+            //at zoom 3 , m * n == tileNumberWide * 2 * 2,tileNumberHigh * 2 * 2
+            //at zoom x , m * n == tileNumberWide * 2^(x),tileNumberHigh * 2^(x)
 
-
-
-
-
+            return gs;
         }
     }
 }
