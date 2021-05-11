@@ -2,6 +2,24 @@ namespace TileGrid
 {
     public class SRS
     {
+        private static double MetersPerDegree =  111319.49079327358;
+        public static double GetMetersPerUnit(Unit unit)
+        {
+            double result = 0.0;
+            switch (unit)
+            {
+                case Unit.Degree:
+                    result = MetersPerDegree;
+                    break;
+                case Unit.Meter:
+                    result = 1.0;
+                    break;
+                default:
+                    //todo
+                    throw new System.Exception();
+            }
+            return result;
+        }
         public static SRS Epsg4326 => new SRS
                     (
                         4326,
