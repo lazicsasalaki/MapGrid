@@ -1,7 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+
+    <PackageId>TileGrid</PackageId>
+    <Version>0.1</Version>
+    <Authors>zhangzhang</Authors>
   </PropertyGroup>
 
 </Project>
