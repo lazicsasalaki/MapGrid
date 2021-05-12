@@ -38,6 +38,19 @@ namespace TileGrid
                             20037508.34,
                             20037508.34}
                     );
+        public static SRS Epsg4490 => new SRS
+                    (
+                        4490,
+                        Unit.Degree,
+                        111319.49079327358,
+                        new double[]{
+                            73.62,
+                            16.7,
+                            134.77 ,
+                            53.56
+                        }
+                    );
+
         public SRS(int ePSG, Unit unit, double metersPerUnit, double[] bBox)
         {
             EPSG = ePSG;
