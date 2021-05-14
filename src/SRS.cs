@@ -14,9 +14,21 @@ namespace TileGrid
                 case Unit.Meter:
                     result = 1.0;
                     break;
-                default:
-                    //todo
-                    throw new System.Exception();
+                case Unit.Kilometer:
+                    result = 0.001;
+                    break;
+                case Unit.Feet:
+                    result = 0.3048;
+                    break;
+                case Unit.Inche:
+                    result = 0.0254;
+                    break;
+                case Unit.Centimeter:
+                    result = 0.01;
+                    break;
+                case Unit.Millimeter:
+                    result = 0.001;
+                    break;
             }
             return result;
         }
