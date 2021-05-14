@@ -62,7 +62,8 @@ namespace TileGrid
             gs.MinZoom = minZoom;
             gs.MaxZoom = maxZoom;
             gs.GridLevels = new Grid[gs.LevelCount];
-            
+            gs.BoundingBox = exBBox;
+
             for (int i = 0; i < levelNumber; i++)
             {
                 var zoomLevel = minZoom + i;
