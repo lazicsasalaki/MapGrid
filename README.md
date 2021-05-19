@@ -3,7 +3,7 @@ Map tile grid helper lib.
 
 # How to use
 ## GridSet can be seen every where
-Create gridset  with 256 * 256 px,TMS schema,90.7142,epsg 3857.
+Create gridset  with 256 * 256 px,TMS schema,dpi 90.7142,epsg 3857.
 ```csharp
 var gs = GridSet.Create(SRS.Epsg3857,YAxisSchema.Tms,1,20,90.7142,256,256);
 ```
