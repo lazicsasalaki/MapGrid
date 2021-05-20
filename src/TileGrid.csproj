@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>TileGrid</PackageId>
-    <Version>0.2</Version>
+    <Version>0.2.1</Version>
     <Authors>zhangzhang</Authors>
     <RepositoryUrl>https://github.com/sharkAndshark/MapGrid</RepositoryUrl> 
     <RepositoryType>git</RepositoryType> 

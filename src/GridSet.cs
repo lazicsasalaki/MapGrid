@@ -19,8 +19,8 @@ namespace TileGrid
         }
         public int EPSG { get; set; }
         public double DPI { get; set; }
-        public double TileWidthPixel { get; set; }
-        public double TileHeightPixel { get; set; }
+        public int TileWidthPixel { get; set; }
+        public int TileHeightPixel { get; set; }
         public YAxisSchema YAxisSchema { get; set; }
         public int MinZoom { get; set; }
         public int MaxZoom { get; set; }
@@ -29,7 +29,7 @@ namespace TileGrid
         public double[] BoundingBox { get; set; }
         public GridSet() { }
 
-        public GridSet(int ePSG, double dPI, double tileWidthPixel, double tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels)
+        public GridSet(int ePSG, double dPI, int tileWidthPixel, int tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels)
         {
             EPSG = ePSG;
             DPI = dPI;

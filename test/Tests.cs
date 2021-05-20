@@ -53,6 +53,29 @@ namespace TileGrid.Test
             Assert.AreEqual(0.0000703048706055,gs.GridLevels[10].Resolution,1.0e-5);
             Assert.AreEqual(27951.079986040175,gs.GridLevels[10].ScaleDenom,1.0e-5);
         }
+        [Test]
+        public void Test4326_256_TMS()
+        {
+            var gs = GridSet.Create(SRS.Epsg4326,tileWidthPixel:256,tielHeightPixel:256,minZoom:0,maxZoom:15);
+
+            Assert.AreEqual(4326,gs.EPSG);
+            Assert.AreEqual(90.71428571428572,gs.DPI,1.0e-5);
+            Assert.AreEqual(256,gs.TileWidthPixel);
+            Assert.AreEqual(256,gs.TileHeightPixel);
+            Assert.AreEqual(YAxisSchema.Tms,gs.YAxisSchema);
+            Assert.AreEqual(0,gs.MinZoom);
+            Assert.AreEqual(15,gs.MaxZoom);
+            
+            Assert.AreEqual(0.703125,gs.GridLevels[0].Resolution,1.0e-5);
+            Assert.AreEqual(279541132.0143589,gs.GridLevels[0].ScaleDenom,1.0e-5);
+
+            Assert.AreEqual(0.3515625,gs.GridLevels[1].Resolution,1.0e-5);
+            Assert.AreEqual(139770566.00717944,gs.GridLevels[1].ScaleDenom,1.0e-5);
+
+
+            Assert.AreEqual(0.0000214576721191,gs.GridLevels[15].Resolution,1.0e-5);
+            Assert.AreEqual(8530.918335382985,gs.GridLevels[15].ScaleDenom,1.0e-5);
+        }
     
     }
 }
