@@ -3,8 +3,9 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <PackageId>TileGrid</PackageId>
-    <Version>0.1</Version>
+    <Version>0.1.2</Version>
     <Authors>zhangzhang</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>
