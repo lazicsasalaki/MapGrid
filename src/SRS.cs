@@ -37,7 +37,7 @@ namespace TileGrid
                         4326,
                         Unit.Degree,
                         111319.49079327358,
-                        new double[] { 73.62, 16.7, 134.77, 53.56 }
+                        new double[] { -180.0,-90.0,180.0,90.0 }
                     );
         public static SRS Epsg3857 => new SRS
                     (
