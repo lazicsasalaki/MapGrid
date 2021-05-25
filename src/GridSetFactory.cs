@@ -40,15 +40,15 @@ namespace TileGrid
             var exHeight = tileNumberHigh * tielHeightPixel * res;
 
             var exBBox = new double[]{srs.BBox[0],srs.BBox[1],srs.BBox[2],srs.BBox[3]};
-            //bbox minx miny maxx maxy
-            exBBox[0] = exBBox[0] + exWidth;
+            
+            exBBox[2] = exBBox[0] + exWidth;
             if (schema == YAxisSchema.Tms)//y from down to top
             {
                 exBBox[3] = exBBox[1] + exHeight;
             }
             else if (schema == YAxisSchema.Xyz)
             {//y from top to down
-                exBBox[3] = exBBox[3] - exHeight;
+                exBBox[1] = exBBox[3] - exHeight;
             }
 
             var levelNumber = maxZoom - minZoom + 1;
