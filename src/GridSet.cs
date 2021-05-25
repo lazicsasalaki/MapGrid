@@ -1,3 +1,5 @@
+using System;
+
 namespace TileGrid
 {
     public class GridSet
@@ -29,9 +31,10 @@ namespace TileGrid
         public int LevelCount => MaxZoom - MinZoom + 1;
         public double[] BoundingBox { get; set; }
         public double Res { get; set; }
+        internal Func<int, Grid> GridFunc { get; set; }
         internal GridSet() { }
 
-        public GridSet(int ePSG, double dPI, double res, int tileWidthPixel, int tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels)
+        internal GridSet(int ePSG, double dPI, double res, int tileWidthPixel, int tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels, Func<int, Grid> gridFunc)
         {
             EPSG = ePSG;
             DPI = dPI;
@@ -42,6 +45,40 @@ namespace TileGrid
             MinZoom = minZoom;
             MaxZoom = maxZoom;
             GridLevels = gridLevels;
+            GridFunc = gridFunc;
         }
+
+        public double[] GetTileBBox(int x, int y, int z)
+        {
+            var grid = GetGrid(z);
+            var gridBBox = BoundingBox;
+            var tileBBox = new double[4];
+
+            var tileLength = grid.Resolution * TileWidthPixel;
+            var tileHeight = grid.Resolution * TileHeightPixel;
+
+            var minx = gridBBox[0] + x * tileLength;
+            var maxx = minx + tileLength;
+            tileBBox[0] = minx;
+            tileBBox[2] = maxx;
+
+            if (YAxisSchema == YAxisSchema.Tms)
+            {
+                var miny = gridBBox[1] + y * tileHeight;
+                var maxy = miny + tileHeight;
+                tileBBox[1] = miny;
+                tileBBox[3] = maxy;
+            }
+            else if (YAxisSchema == YAxisSchema.Xyz)
+            {
+                var maxy = gridBBox[3] - y * tileHeight;
+                var miny = maxy - tileHeight;
+                tileBBox[1] = miny;
+                tileBBox[3] = maxy;
+            }
+
+            return tileBBox;
+        }
+        public Grid GetGrid(int z) => GridFunc(z);
     }
 }

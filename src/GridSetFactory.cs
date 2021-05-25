@@ -66,6 +66,22 @@ namespace TileGrid
             gs.GridLevels = new Grid[gs.LevelCount];
             gs.BoundingBox = exBBox;
 
+            gs.GridFunc = new Func<int, Grid>(z =>
+            {
+                var grid = new Grid();
+                grid.ZoomLevel = z;
+
+                var resolution = res / Math.Pow(2,z);
+                var scaleDenom = (resolution * srs.MetersPerUnit) / (0.0254/dpi);
+                grid.Resolution = resolution;
+                grid.ScaleDenom = scaleDenom;
+
+                grid.NumTilesWidth = (int)(tileNumberWide * Math.Pow(2,z));
+                grid.NumTilesHeight = (int)(tileNumberHigh * Math.Pow(2,z));
+
+                return grid;
+            });
+
             for (int i = 0; i < levelNumber; i++)
             {
                 var zoomLevel = minZoom + i;
