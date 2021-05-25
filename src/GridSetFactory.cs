@@ -55,6 +55,7 @@ namespace TileGrid
             
             var gs = new GridSet();
             gs.EPSG = srs.EPSG;
+            gs.SRS = srs;
             gs.DPI = dpi;
             gs.TileHeightPixel = tielHeightPixel;
             gs.TileWidthPixel = tileWidthPixel;

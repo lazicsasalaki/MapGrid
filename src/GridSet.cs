@@ -17,6 +17,7 @@ namespace TileGrid
         {
             return GridSetFactory.CreateGridSet(srs, schema, minZoom, maxZoom, dpi, tileWidthPixel, tielHeightPixel);
         }
+        public SRS SRS { get; set; }
         public int EPSG { get; set; }
         public double DPI { get; set; }
         public int TileWidthPixel { get; set; }
@@ -27,7 +28,7 @@ namespace TileGrid
         public Grid[] GridLevels { get; set; }
         public int LevelCount => MaxZoom - MinZoom + 1;
         public double[] BoundingBox { get; set; }
-        public GridSet() { }
+        internal GridSet() { }
 
         public GridSet(int ePSG, double dPI, int tileWidthPixel, int tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels)
         {
