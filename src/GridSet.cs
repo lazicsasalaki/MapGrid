@@ -28,12 +28,14 @@ namespace TileGrid
         public Grid[] GridLevels { get; set; }
         public int LevelCount => MaxZoom - MinZoom + 1;
         public double[] BoundingBox { get; set; }
+        public double Res { get; set; }
         internal GridSet() { }
 
-        public GridSet(int ePSG, double dPI, int tileWidthPixel, int tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels)
+        public GridSet(int ePSG, double dPI, double res, int tileWidthPixel, int tileHeightPixel, YAxisSchema yAxisSchema, int minZoom, int maxZoom, Grid[] gridLevels)
         {
             EPSG = ePSG;
             DPI = dPI;
+            Res = res;
             TileWidthPixel = tileWidthPixel;
             TileHeightPixel = tileHeightPixel;
             YAxisSchema = yAxisSchema;

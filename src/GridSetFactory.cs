@@ -57,6 +57,7 @@ namespace TileGrid
             gs.EPSG = srs.EPSG;
             gs.SRS = srs;
             gs.DPI = dpi;
+            gs.Res = res;
             gs.TileHeightPixel = tielHeightPixel;
             gs.TileWidthPixel = tileWidthPixel;
             gs.YAxisSchema = schema;
