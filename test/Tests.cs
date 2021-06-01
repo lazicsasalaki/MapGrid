@@ -138,5 +138,33 @@ namespace TileGrid.Test
             Assert.AreEqual(39135.7584765625, grid2.Resolution, 1.0e-5);
             Assert.AreEqual(139770565.98772323, grid2.ScaleDenom, 1.0e-5);
         }
+
+        [Test]
+        public void TestGetTileIndex()
+        {
+            var lon = 103.9637;
+            var lat = 30.6139;
+
+            var exX = 421;
+            var exY = 318;
+
+            var gridSet = GridSet.Create(SRS.Epsg4490,schema:YAxisSchema.Xyz);
+            var indexArr = gridSet.GetTileIndex(lon,lat,9);
+            Assert.AreEqual(exX,indexArr[0]);
+            Assert.AreEqual(exY,indexArr[1]);
+
+            
+            var lon1 = 83.491;
+            var lat1 = 25.66;
+
+            var exX1 = 0;
+            var exY1 = 0;
+
+            var gridSet1 = GridSet.Create(SRS.Epsg4490,schema:YAxisSchema.Tms);
+            var indexArr1 = gridSet1.GetTileIndex(lon1,lat1,1);
+            
+            Assert.AreEqual(exX1,indexArr1[0]);
+            Assert.AreEqual(exY1,indexArr1[1]);
+        }
     }
 }

@@ -48,6 +48,47 @@ namespace TileGrid
             GridFunc = gridFunc;
         }
 
+        /// <summary>
+        /// Calculate tile index about one give point
+        /// </summary>
+        /// <param name="xCoord">x of point</param>
+        /// <param name="yCoord">y of point</param>
+        /// <param name="zoom">Zoom of tile index </param>
+        /// <returns>Tile index</returns>
+        public int[] GetTileIndex(double xCoord, double yCoord, int zoom)
+        {
+            int xIndex = 0;
+            int yIndex = 0;
+
+            var grid = GridFunc(zoom);
+            var numX = grid.NumTilesWidth;
+            var numY = grid.NumTilesHeight;
+
+            var tileLength = grid.Resolution * TileWidthPixel;
+            var tileHeight = grid.Resolution * TileHeightPixel;
+
+            var minx = BoundingBox[0];
+            var miny = BoundingBox[1];
+            var maxy = BoundingBox[3];
+
+            xIndex = (int)((xCoord - minx) / tileLength);
+
+            if (YAxisSchema == YAxisSchema.Tms)
+            {
+                yIndex = (int)((yCoord - miny) / tileHeight);
+            }
+            else if (YAxisSchema == YAxisSchema.Xyz)
+            {
+                yIndex = (int)((maxy - yCoord) / tileHeight);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+
+            return new[] { xIndex, yIndex };
+        }
+
         public double[] GetTileBBox(int x, int y, int z)
         {
             var grid = GetGrid(z);
